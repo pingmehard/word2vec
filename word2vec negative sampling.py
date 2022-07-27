@@ -35,7 +35,6 @@ def generate_w2v_sgns_samples(text, window_size, vocab_size, ns_rate):
     vocab_set = set(range(vocab_size))
     text_len = len(text)
     window_step_range = [int(i) for i in list((np.array(list(range(window_size))) - np.array(list(range(window_size)))[::-1]) / 2)]
-    # window_step_range.remove(0)
 
     # difference between vocab and text vocab
     vocab_text_disjunction = list(vocab_set.difference(text_set))
@@ -43,9 +42,11 @@ def generate_w2v_sgns_samples(text, window_size, vocab_size, ns_rate):
     for i in range(text_len):
         for j in window_step_range:
             if i + j >= 0 and i + j <= text_len - 1 and j != 0:
+
                 tokens_list.append([text[i], text[i + j], 1])
                 print([text[i], text[i + j], 1])
                 for r in range(ns_rate):
+                    
                     tokens_list.append([text[i], define_random_int(text, i, window_size, vocab_text_disjunction), 0])
                     print([text[i], define_random_int(text, i, window_size, vocab_text_disjunction), 0])
         print('next step')
